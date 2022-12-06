@@ -6,10 +6,10 @@ npm i class-variance-authority
 ```
 ##### Create the component
 ```typescript
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, VariantProps } from "class-variance-authority "
 
-const buttonStyles = cva(" transition-colors", {
-  variants: {
+const buttonStyles = cva(" transition-colors" /* <= all of invariants inside this string */ , {
+  variants: { /* <= all of variants inside this object */
     intent: {
       primary: "bg-red-500 hover:bg-red-900",
       secondary: " hover:bg-green-900 bg-green-500",
@@ -26,6 +26,8 @@ const buttonStyles = cva(" transition-colors", {
   },
 })
 
+
+// extends React.HTMLAttributes<HTMLButtonElement> if I want to get all of types from default button
 export interface Props
   extends React.HTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonStyles> {}
@@ -43,6 +45,7 @@ export default function Home() {
   return (
     <div>
       <Button intent="secondary" onClick={(e) => alert("Hello World")} />
+      // onClick is provided by {...props} and typed by React.HTMLAttributes<HTMLButtonElement> * line 32 *
     </div>
   )
 }
